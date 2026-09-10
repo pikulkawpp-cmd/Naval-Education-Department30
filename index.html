@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ข้อสอบคัดเลือกเข้ากรมยุทธศึกษาทหารเรือ</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <!-- หน้าแรก (Welcome Screen) -->
+        <div id="start-screen" class="screen">
+            <h1>ข้อสอบคัดเลือกเข้ากรมยุทธศึกษาทหารเรือ</h1>
+            <p class="info-text">จำนวน 40 ข้อ | คะแนนเต็ม 40 คะแนน</p>
+            <p class="info-detail">เกณฑ์การผ่าน: ได้รับคะแนน 30 คะแนนขึ้นไป</p>
+            <button type="button" class="btn-start" onclick="startQuiz()">📘 กดเพื่อเริ่มทำข้อสอบ</button>
+        </div>
+
+        <!-- หน้าข้อสอบ (Quiz Screen) -->
+        <div id="quiz-screen" class="screen" style="display: none;">
+            <header class="header">
+                <h1>ข้อสอบคัดเลือกเข้ากรมยุทธศึกษาทหารเรือ</h1>
+                <p class="subtitle">จำนวน 40 ข้อ | 40 คะแนน</p>
+            </header>
+
+            <form id="quiz-form">
+                <div id="questions-container">
+                    <!-- คำถามจะถูกดึงมาจาก script.js -->
+                </div>
+                <button type="button" id="submit-btn" onclick="calculateScore()">ส่งข้อสอบ / ตรวจคะแนน</button>
+            </form>
+        </div>
+
+        <!-- Modal สรุปผลสอบ -->
+        <div id="result-modal" class="modal">
+            <div class="modal-content" id="capture-area">
+                <h2>ผลการสอบ</h2>
+                <div id="status-badge"></div>
+                <p id="score-text"></p>
+                <p id="percentage-text"></p>
+                
+                <div class="button-group">
+                    <button type="button" class="btn-download" onclick="downloadResultImage()">
+                        📸 บันทึกผลสอบเป็นรูปภาพ
+                    </button>
+                    <button type="button" class="btn-restart" onclick="location.reload()">
+                        ทำแบบทดสอบอีกครั้ง
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
