@@ -1,3 +1,7 @@
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxyow1Qk8-WntMk_qsFips6KqIaYRGlhMQEWKif08rsoprQESS3IRz45ZGHZIsDFzHP/exec';
+
+let robloxName = "";
+
 const questions = [
     // ภาษาไทย
     { id: 1, section: "วิชาภาษาไทย", title: "ข้อใดใช้ภาษาได้ถูกต้องที่สุด", options: ["เขาได้ทำการดำเนินงาน", "เขาดำเนินงานตามคำสั่ง", "เขาได้ดำเนินการงาน", "เขาทำการดำเนินงานแล้ว"], answer: "ข" },
@@ -54,18 +58,30 @@ const questions = [
 
 const prefixes = ["ก", "ข", "ค", "ง"];
 
-// สลับการแสดงผลหน้าแรก ไป หน้าทำข้อสอบ
-function startQuiz() {
+// เปลี่ยนจากหน้าแรก ไป หน้ากรอกข้อมูล
+function goToRegister() {
     document.getElementById("start-screen").style.display = "none";
+    document.getElementById("register-screen").style.display = "block";
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// รับข้อมูลผู้สอบ และเปลี่ยนไปหน้าทำข้อสอบ
+function startQuiz(event) {
+    event.preventDefault();
+    robloxName = document.getElementById("roblox-name").value;
+
+    document.getElementById("register-screen").style.display = "none";
     document.getElementById("quiz-screen").style.display = "block";
+    document.getElementById("user-greeting").innerText = `ผู้สอบ: ${robloxName}`;
+
     renderQuiz();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// แสดงรายการข้อสอบ
+// สร้างข้อสอบ
 function renderQuiz() {
     const container = document.getElementById("questions-container");
-    container.innerHTML = ""; // เคลียร์ข้อสอบเดิมเพื่อป้องกันการซ้ำ
+    container.innerHTML = "";
     let currentSection = "";
 
     questions.forEach((q) => {
@@ -85,7 +101,7 @@ function renderQuiz() {
             const prefix = prefixes[i];
             optionsHTML += `
                 <label>
-                    <input type="radio" name="q${q.id}" value="${prefix}">
+                    <input type="radio" name="q${q.id}" value="${prefix}" required>
                     <strong>${prefix}.</strong> ${opt}
                 </label>
             `;
@@ -99,7 +115,7 @@ function renderQuiz() {
     });
 }
 
-// ตรวจคำตอบและคำนวณคะแนน
+// คำนวณคะแนน และส่งข้อมูลไป Google Sheet
 function calculateScore() {
     let score = 0;
     let answered = 0;
@@ -122,12 +138,16 @@ function calculateScore() {
 
     const total = questions.length;
     const percentage = ((score / total) * 100).toFixed(1);
-    const isPass = score >= 30;
+    const isPass = score >= 24;
+    const statusStr = isPass ? "ผ่านเกณฑ์" : "ไม่ผ่านเกณฑ์";
 
+    // แสดงผลบน Modal
     const modal = document.getElementById("result-modal");
     const statusBadge = document.getElementById("status-badge");
+    const resultName = document.getElementById("result-name");
     const scoreText = document.getElementById("score-text");
     const percentageText = document.getElementById("percentage-text");
+    const saveStatus = document.getElementById("save-status");
 
     if (isPass) {
         statusBadge.className = "pass";
@@ -137,30 +157,61 @@ function calculateScore() {
         statusBadge.innerText = "❌ ผลการสอบ: ไม่ผ่านเกณฑ์";
     }
 
+    resultName.innerText = `ผู้สอบ: ${robloxName}`;
     scoreText.innerText = `คะแนนที่ได้: ${score} / ${total} คะแนน`;
     percentageText.innerText = `คิดเป็น: ${percentage}%`;
+    saveStatus.innerText = "⏳ กำลังบันทึกคะแนนลงระบบ...";
 
     modal.style.display = "flex";
+
+    // ส่งข้อมูลไปยัง Google Sheet ผ่าน Apps Script (ส่งข้อมูล info เป็นช่องว่างหรือขีด dashes)
+    const payload = {
+        name: robloxName,
+        info: "-", 
+        score: score,
+        total: total,
+        percentage: percentage + "%",
+        status: statusStr
+    };
+
+    fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(() => {
+        saveStatus.innerText = "✅ บันทึกคะแนนลง Google Sheet สำเร็จ!";
+    })
+    .catch((error) => {
+        console.error("Error:", error);
+        saveStatus.innerText = "❌ ไม่สามารถบันทึกข้อมูลลงระบบได้";
+    });
 }
 
 // ดาวน์โหลดผลสอบเป็นภาพ
 function downloadResultImage() {
     const targetElement = document.getElementById("capture-area");
     const buttonGroup = targetElement.querySelector(".button-group");
+    const saveStatus = document.getElementById("save-status");
 
     if (buttonGroup) buttonGroup.style.display = "none";
+    if (saveStatus) saveStatus.style.display = "none";
 
     html2canvas(targetElement, {
         scale: 2,
         useCORS: true,
-        backgroundColor: "#ffffff00"
+        backgroundColor: "#ffffff"
     }).then(canvas => {
         const image = canvas.toDataURL("image/png");
         const link = document.createElement("a");
         link.href = image;
-        link.download = "ผลการสอบ_กรมยุทธศึกษาทหารเรือ.png";
+        link.download = `ผลการสอบ_${robloxName}.png`;
         link.click();
 
         if (buttonGroup) buttonGroup.style.display = "flex";
+        if (saveStatus) saveStatus.style.display = "block";
     });
 }
