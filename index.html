@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ปิดให้บริการ - หมดเขตหรือปิดระบบชั่วคราว</title>
-    <!-- นำเข้าฟอนต์ Prompt -->
+    <title>ปิดปรับปรุงระบบ - กำลังดำเนินการอัปเกรด</title>
+    <!-- นำเข้าฟอนต์ Prompt จาก Google Fonts เพื่อความสวยงาม -->
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -15,8 +15,8 @@
         }
 
         body {
-            background: linear-gradient(135deg, #18181b 100%, #27272a 0%);
-            color: #f4f4f5;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f8fafc;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -26,63 +26,53 @@
 
         .container {
             text-align: center;
-            background: rgba(39, 39, 42, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 50px 30px;
-            border-radius: 24px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            max-width: 520px;
+            border-radius: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
             width: 100%;
             animation: fadeIn 0.8s ease-in-out;
         }
 
-        .icon-box {
-            font-size: 60px;
+        /* อนิเมชันไอคอนเกียร์หมุน */
+        .gear-icon {
+            font-size: 64px;
             margin-bottom: 20px;
             display: inline-block;
+            animation: spin 6s linear infinite;
         }
 
         h1 {
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 600;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             color: #ffffff;
         }
 
         p {
-            font-size: 15px;
-            color: #a1a1aa;
-            line-height: 1.7;
-            margin-bottom: 25px;
+            font-size: 16px;
+            color: #94a3b8;
+            line-height: 1.6;
+            margin-bottom: 30px;
         }
 
-        .deadline-box {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            color: #f87171;
-            padding: 12px 20px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 25px;
-        }
-
-        .contact-btn {
+        .status-badge {
             display: inline-block;
-            background: #5865F2; /* สีประจำแบรนด์ Discord */
-            color: #ffffff;
-            padding: 12px 24px;
-            border-radius: 8px;
-            text-decoration: none;
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            padding: 8px 16px;
+            border-radius: 50px;
             font-size: 14px;
             font-weight: 500;
-            transition: background 0.3s, transform 0.2s;
+            border: 1px solid rgba(59, 130, 246, 0.3);
         }
 
-        .contact-btn:hover {
-            background: #4752C4;
-            transform: translateY(-2px);
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         @keyframes fadeIn {
@@ -94,21 +84,10 @@
 <body>
 
     <div class="container">
-        <div class="icon-box">⏳</div>
-        
-        <h1>ปิดให้บริการชั่วคราว / สิ้นสุดระยะเวลา</h1>
-        
-        <p>
-            ระบบนี้ได้ปิดให้บริการชั่วคราว หรืออาจจะหมดเขตการใช้งานตามกำหนดเวลาเรียบร้อยแล้วครับ ขอบคุณทุกท่านที่ให้ความสนใจ
-        </p>
-
-        <div class="deadline-box">
-            📅 สถานะ: ปิดรับการใช้งาน / หมดเขตแล้ว
-        </div>
-
-        <a href="mailto:pikulkaw.pp@gmail.com?subject=ติดต่อสอบถามเกี่ยวกับระบบ" class="contact-btn">ติดต่อผู้ดูแลระบบ (Gmail)</a>
-        <!-- ปุ่มลิงก์ไป Discord -->
-        <a href="https://discord.gg/QTfFrS4g" target="_blank" class="contact-btn">ติดต่อผู้ดูแลระบบ (Discord)</a>
+        <div class="gear-icon">⚙️</div>
+        <h1>กำลังปรับปรุงระบบ</h1>
+        <p>เรากำลังพัฒนาและอัปเกรดระบบให้ดียิ่งขึ้น<br>ขออภัยในความไม่สะดวกมา ณ ที่นี้ด้วยครับ/ค่ะ</p>
+        <div class="status-badge">จะกลับมาเปิดให้บริการเร็วๆ นี้</div>
     </div>
 
 </body>
