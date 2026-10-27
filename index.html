@@ -1,79 +1,115 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <!-- ไอคอนแสดงบนแท็บเว็บไซต์ (Favicon) -->
-    <link rel="icon" type="image/png" href="47-2.png">
-    <!-- สำหรับรองรับอุปกรณ์ Apple / iOS -->
-    <link rel="apple-touch-icon" href="47-2.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ข้อสอบคัดเลือกเข้ากรมยุทธศึกษาทหารเรือ</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <title>ปิดให้บริการ - หมดเขตหรือปิดระบบชั่วคราว</title>
+    <!-- นำเข้าฟอนต์ Prompt -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Prompt', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #18181b 100%, #27272a 0%);
+            color: #f4f4f5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(39, 39, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 50px 30px;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            max-width: 520px;
+            width: 100%;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .icon-box {
+            font-size: 60px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        h1 {
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+
+        p {
+            font-size: 15px;
+            color: #a1a1aa;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .deadline-box {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 25px;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            background: #5865F2; /* สีประจำแบรนด์ Discord */
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .contact-btn:hover {
+            background: #4752C4;
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- 1. หน้าแรก (Welcome Screen) -->
-        <div id="start-screen" class="screen">
-            <img src="47-2.png" alt="กรมยุทธศึกษาทหารเรือ" class="main-logo">
-            <h1>ข้อสอบคัดเลือกเข้ากรมยุทธศึกษาทหารเรือ</h1>
-            <p class="info-text">จำนวน 40 ข้อ | คะแนนเต็ม 40 คะแนน</p>
-            <p class="info-detail">เกณฑ์การผ่าน: ได้รับคะแนน 60% ขึ้นไป (24 คะแนน)</p>
-            <button type="button" class="btn-primary" onclick="goToRegister()">📘 เริ่มต้นทำแบบทดสอบ</button>
+        <div class="icon-box">⏳</div>
+        
+        <h1>ปิดให้บริการชั่วคราว / สิ้นสุดระยะเวลา</h1>
+        
+        <p>
+            ระบบนี้ได้ปิดให้บริการชั่วคราว หรืออาจจะหมดเขตการใช้งานตามกำหนดเวลาเรียบร้อยแล้วครับ ขอบคุณทุกท่านที่ให้ความสนใจ
+        </p>
+
+        <div class="deadline-box">
+            📅 สถานะ: ปิดรับการใช้งาน / หมดเขตแล้ว
         </div>
 
-        <!-- 2. หน้ากรอกข้อมูลผู้สอบ (Register Screen) -->
-        <div id="register-screen" class="screen" style="display: none;">
-            <img src="47-2.png" alt="กรมยุทธศึกษาทหารเรือ" class="main-logo">
-            <h2>กรอกข้อมูลผู้เข้ารับการทดสอบ</h2>
-            <form id="user-info-form" onsubmit="startQuiz(event)">
-                <div class="form-group">
-                    <label for="roblox-name">ยศ - ชื่อ Roblox:</label>
-                    <input type="text" id="roblox-name" required placeholder="เช่น พลฯ สมชาย (หรือชื่อในเกม)">
-                </div>
-                <button type="submit" class="btn-primary">✍️ เข้าสู่หน้าทำข้อสอบ</button>
-            </form>
-        </div>
-
-        <!-- 3. หน้าทำข้อสอบ (Quiz Screen) -->
-        <div id="quiz-screen" class="screen" style="display: none;">
-            <header class="header">
-                <img src="47-2.png" alt="กรมยุทธศึกษาทหารเรือ" class="logo">
-                <h1>ข้อสอบคัดเลือกเข้ากรมยุทธศึกษาทหารเรือ</h1>
-                <p class="subtitle" id="user-greeting"></p>
-            </header>
-
-            <form id="quiz-form">
-                <div id="questions-container"></div>
-                <button type="button" id="submit-btn" onclick="calculateScore()">ส่งข้อสอบ / ตรวจคะแนน</button>
-            </form>
-        </div>
-
-        <!-- Modal สรุปผลสอบ -->
-        <div id="result-modal" class="modal">
-            <div class="modal-content" id="capture-area">
-                <img src="47-2.png" alt="กรมยุทธศึกษาทหารเรือ" class="modal-logo">
-                <h2>ผลการสอบ</h2>
-                <div id="status-badge"></div>
-                <p id="result-name" style="font-weight: bold; color: #0a2540; margin-bottom: 5px;"></p>
-                <p id="score-text"></p>
-                <p id="percentage-text"></p>
-                <p id="save-status" style="font-size: 13px; color: #16a34a; margin-top: 5px;"></p>
-                
-                <div class="button-group">
-                    <button type="button" class="btn-download" onclick="downloadResultImage()">
-                        📸 บันทึกผลสอบเป็นรูปภาพ
-                    </button>
-                    <button type="button" class="btn-restart" onclick="location.reload()">
-                        ทำแบบทดสอบอีกครั้ง
-                    </button>
-                </div>
-            </div>
-        </div>
+        <a href="mailto:pikulkaw.pp@gmail.com?subject=ติดต่อสอบถามเกี่ยวกับระบบ" class="contact-btn">ติดต่อผู้ดูแลระบบ (Gmail)</a>
+        <!-- ปุ่มลิงก์ไป Discord -->
+        <a href="https://discord.gg/QTfFrS4g" target="_blank" class="contact-btn">ติดต่อผู้ดูแลระบบ (Discord)</a>
     </div>
 
-    <script src="script.js"></script>
 </body>
 </html>
