@@ -3,92 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ปิดปรับปรุงระบบ - กำลังดำเนินการอัปเกรด</title>
-    <!-- นำเข้าฟอนต์ Prompt จาก Google Fonts เพื่อความสวยงาม -->
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Prompt', sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: #f8fafc;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .container {
-            text-align: center;
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 50px 30px;
-            border-radius: 20px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
-            max-width: 500px;
-            width: 100%;
-            animation: fadeIn 0.8s ease-in-out;
-        }
-
-        /* อนิเมชันไอคอนเกียร์หมุน */
-        .gear-icon {
-            font-size: 64px;
-            margin-bottom: 20px;
-            display: inline-block;
-            animation: spin 6s linear infinite;
-        }
-
-        h1 {
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: #ffffff;
-        }
-
-        p {
-            font-size: 16px;
-            color: #94a3b8;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-
-        .status-badge {
-            display: inline-block;
-            background: rgba(59, 130, 246, 0.15);
-            color: #60a5fa;
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-size: 14px;
-            font-weight: 500;
-            border: 1px solid rgba(59, 130, 246, 0.3);
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    <!-- ไอคอนแสดงบนแท็บเว็บไซต์ (Favicon) -->
+    <link rel="icon" type="image/png" href="47-2.png">
+    <!-- สำหรับรองรับอุปกรณ์ Apple / iOS -->
+    <link rel="apple-touch-icon" href="47-2.png">
+    <title>แบบทดสอบคัดเลือก - กรมยุทธศึกษาทหารเรือ</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Library สำหรับแคปภาพและดาวน์โหลด -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 
     <div class="container">
-        <div class="gear-icon">⚙️</div>
-        <h1>กำลังปรับปรุงระบบ</h1>
-        <p>เรากำลังพัฒนาและอัปเกรดระบบให้ดียิ่งขึ้น<br>ขออภัยในความไม่สะดวกมา ณ ที่นี้ด้วยครับ/ค่ะ</p>
-        <div class="status-badge">จะกลับมาเปิดให้บริการเร็วๆ นี้</div>
+        <!-- 1. หน้าแรก (Start Screen) -->
+        <div id="start-screen" class="screen">
+            <div class="logo-container">
+                <img src="47-2.png" alt="กรมยุทธศึกษาทหารเรือ" class="header-logo">
+            </div>
+            <div class="header">
+                <h2>แบบทดสอบคัดเลือกกำลังพล</h2>
+                <p>กรมยุทธศึกษาทหารเรือ (Roblox Roleplay)</p>
+            </div>
+            <div class="welcome-card">
+                <h3>📘 รายละเอียดการทดสอบ</h3>
+                <p>• จำนวนข้อสอบทั้งหมด: <strong>30 ข้อ</strong></p>
+                <p>• เกณฑ์การผ่าน: <strong>25 คะแนนขึ้นไป</strong></p>
+                <p>• มีการบันทึกผลสอบเข้าสู่ระบบฐานข้อมูลหลัก</p>
+            </div>
+            <button type="button" class="btn-primary-link" onclick="goToRegister()">
+                <span>เข้าสู่ระบบการทดสอบ</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+        </div>
+
+        <!-- 2. หน้ากรอกข้อมูล (Register Screen) -->
+        <div id="register-screen" class="screen hidden">
+            <div class="logo-container">
+                <img src="47-2.png" alt="กรมยุทธศึกษาทหารเรือ" class="header-logo">
+            </div>
+            <div class="header">
+                <h2>รายงานตัวผู้เข้ารับการทดสอบ</h2>
+                <p>กรุณาระบุข้อมูล ยศ และ ชื่อผู้ใช้ Roblox ของท่าน</p>
+            </div>
+            <form id="user-info-form" onsubmit="startQuiz(event)">
+                <div class="form-group">
+                    <label for="roblox-name">ยศ - ชื่อ Roblox</label>
+                    <input type="text" id="roblox-name" required placeholder="เช่น พลฯ Somchai_Navy (หรือชื่อในเกม)">
+                </div>
+                <button type="submit" class="btn-primary-link">
+                    <span>เริ่มทำแบบทดสอบ</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </form>
+        </div>
+
+        <!-- 3. หน้าทำข้อสอบ (Quiz Screen) -->
+        <div id="quiz-screen" class="screen hidden">
+            <div class="header">
+                <div class="logo-container">
+                    <img src="47-2.png" alt="กรมยุทธศึกษาทหารเรือ" class="header-logo" style="width: 75px; height: 75px;">
+                </div>
+                <h2 style="font-size: 20px;">แบบทดสอบกรมยุทธศึกษาทหารเรือ</h2>
+                <p id="user-greeting" style="color: #38bdf8; font-weight: 600;"></p>
+            </div>
+
+            <form id="quiz-form">
+                <div id="questions-container"></div>
+                <button type="button" id="submit-btn" onclick="calculateScore()">ส่งข้อสอบ / ประเมินผล</button>
+            </form>
+        </div>
+
+        <!-- 4. หน้าแสดงผลการสอบ (Result Screen - หน้าใหม่เต็มตา) -->
+        <div id="result-screen" class="screen hidden">
+            <div class="result-card" id="capture-area">
+                <div class="logo-container">
+                    <img src="47-2.png" alt="กรมยุทธศึกษาทหารเรือ" class="header-logo" style="width: 85px; height: 85px;">
+                </div>
+                <h2>ผลการประเมิน</h2>
+                
+                <div id="status-badge"></div>
+                
+                <p id="result-name" class="result-user-text"></p>
+                
+                <div class="score-display">
+                    <span id="score-text">0</span><span class="score-total">/30</span>
+                </div>
+                
+                <p id="percentage-text" style="color: #94a3b8; font-size: 15px; margin-bottom: 12px;"></p>
+                <div id="save-status" class="loading"></div>
+            </div>
+
+            <div class="button-group">
+                <button type="button" class="btn-download" onclick="downloadResultImage()">
+                    📸 บันทึกภาพผลสอบ
+                </button>
+                <button type="button" class="btn-restart" onclick="location.reload()">
+                    ทำแบบทดสอบอีกครั้ง
+                </button>
+            </div>
+        </div>
     </div>
 
+    <script src="script.js"></script>
 </body>
 </html>
